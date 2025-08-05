@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bastion - Command Center for Translational Medicine
 
-## Getting Started
+> *"Two diseases cured; ten‑thousand remain. Translation must move at software speed."* — Estelion's Charge
 
-First, run the development server:
+Bastion is the federated command center that unifies the entire translational medicine stack—from OpenFDA safety feeds to NIH genomic lakes—into one computable, shareable lattice called **CureGraph**.
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see the landing page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎨 Design System
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This implementation follows the **Bastion Design Constitution v3.2** specification:
 
-## Learn More
+### Color Palette
+- **Greyscale**: From `grey/900` (#0A0C10) to `grey/100` (#F5F8FA)
+- **Functional**: `accent/pass` (#19A7CE), `accent/fail` (#FF6B6B), `accent/warn` (#FFB454), `accent/merit` (#F3C94C)
 
-To learn more about Next.js, take a look at the following resources:
+### Typography
+- **Display XL**: 28px, Inter 600
+- **Display L**: 22px, Inter 600  
+- **Heading M**: 18px, Inter 600
+- **Body M/S**: 15px/13px, Inter 400
+- **Code**: 13px, IBM Plex Mono 400
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Performance Targets
+- First Contentful Paint: ≤ 1s (4G)
+- Largest Contentful Paint: ≤ 2s
+- Bundle size: ≤ 150kB (gzipped) per route
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Architecture
 
-## Deploy on Vercel
+### Components (`/components`)
+- `Badge` - Metric pills with flip animation
+- `AuroraBackground` - Animated gradient ribbons
+- `LifeDaysTicker` - North-star metric counter
+- `ConnectorStatus` - Federation health monitoring
+- `Navigation` - Primary site navigation
+- `HeroSection` - Landing page hero
+- `CTASection` - Primary action flows
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Features
+- ✅ **Aurora Ribbons**: 90s keyframe hue rotation
+- ✅ **Motion Respect**: `prefers-reduced-motion` support
+- ✅ **Accessibility**: WCAG AA compliance, focus rings
+- ✅ **Performance**: Code splitting, lazy loading
+- ✅ **Responsive**: 12/8/4/1 column grid system
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔬 Federation Connectors
+
+Bastion integrates with the global translational medicine ecosystem:
+
+| Source | Cadence | Purpose |
+|--------|---------|---------|
+| **OpenFDA** | 1h | Auto-flag adverse events |
+| **ClinicalTrials.gov** | 24h | Suggest protocol reuse |
+| **NIH dbGaP** | Snapshot | Genotype cohorts |
+| **EMA CTIS** | 6h | EU safety signals |
+| **EHR FHIR** | Streaming | Live recruitment velocity |
+
+## 🎯 Mission
+
+*"We design to collapse the distance between idea and cure—at planetary scale."*
+
+**Merge only what advances the CureGraph.**
+
+## 📋 Development
+
+Built with:
+- **Next.js 15** - React framework with RSC
+- **Tailwind CSS 4** - Utility-first styling
+- **Framer Motion** - Animation library
+- **Lucide React** - Icon system
+- **TypeScript** - Type safety
+
+## 🔒 Compliance
+
+- Part 11 cryptographic signatures
+- pg_audit + WAL streaming to S3 Glacier
+- Privacy Kit PHI masking
+- WCAG AA accessibility compliance
+
+---
+
+*Bastion is part of the Estelion ecosystem advancing computational medicine.*
