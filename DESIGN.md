@@ -1,192 +1,194 @@
 # **Bastion Design Constitution** — *CureGraph Specification*
 
-**Comprehensive Edition v3.0 — August 2025**
+**Master Edition v3.2 — August 2025**
 
-> **Estelion’s Charge**   Two diseases cured; ten‑thousand remain. Bastion is the universal forge where every idea, dataset, simulation, and protocol becomes computable, shareable, and merge‑able—so translation moves at software speed.
+> **Estelion’s Charge**   Two diseases cured; ten‑thousand remain.  Bastion is the **Command Center** where every idea, dataset, simulation, and protocol becomes computable, shareable, and merge‑able—so translation moves at software speed.
+> **Analogy:** GitHub gave code a home; Hugging Face gave models a commons; **Bastion unifies the entire translational stack**—from OpenFDA safety feeds to NIH genomic lakes—into one federated lattice we call **CureGraph**.
 
 ---
 
 ## 0 · Mandate
 
-*This document is the golden record for Bastion’s visual and interaction language.*  A designer or engineer landing on the project must be able to craft a Figma frame, React component, or Framer motion variant that drops into production **pixel‑perfect** and **mission‑aligned** within 24 hours.
+This document is the **golden record** for Bastion’s visual and interaction language.  A newcomer should be able to craft a Figma frame, React component, or Framer animation that drops into prod **pixel‑perfect** and **mission‑aligned** within 24 hours.
 
 > **North‑Star Metric**  » *Life‑days accelerated by Bastion‑hosted work.*  Every interaction should make that ticker rise.
 
 ---
 
-## 1 · Design Tenets (root‑level)
+## 1 · Design Tenets
 
-1. **Evidence > Ornament** — every pixel must map to a verifiable datum: commit SHA, twin AUC, power estimate, or cryptographic signature. No decorative charts.
-2. **Velocity = Mercy** — performance budgets are moral budgets. If it costs milliseconds, justify it.
-3. **Clarity, then Delight** — default views favour clinicians & regulators; deeper panels delight power users.
-4. **Equity on Surface** — inclusion & demographic metrics share first‑class visual language with statistical power.
-5. **Abundance Aesthetic** — subtle motion, gradients, and micro‑copy evoke possibility, not chaos.
+1. **Evidence > Ornament** — every pixel maps to a verifiable datum: commit SHA, twin AUC, power estimate, or cryptographic signature.
+2. **Velocity = Mercy** — performance budgets are moral budgets. FCP ≤ 1 s on 4 G.
+3. **Clarity → Delight** — default views favour clinicians & regulators; depth delights power users.
+4. **Equity on Surface** — inclusion metrics share the same visual weight as statistical power.
+5. **Abundance Aesthetic** — gradients, motion, and micro‑copy evoke possibility without chaos.
+6. **Federation by Default** — Connectors to OpenFDA, EMA, NIH, and EHR nodes are first‑class citizens.
 
 ---
 
 ## 2 · Visual Foundation
 
-### 2.1 Colour System
+### 2.1 Colour System
 
-*Token naming follows* `semantic/objective/variant`.
+*All colours defined in Linear‑sRGB; exposed as CSS variables & Tailwind config.*
 
-#### Greyscale (Linear‑sRGB)
+#### Greyscale
 
-|  Token     | Hex      |  Usage                         |
-| ---------- | -------- | ------------------------------ |
-| `grey/900` |  #0A0C10 | Dark canvas (Dark Mode)        |
-| `grey/800` |  #16181D | Panel BG, elevations           |
-| `grey/700` |  #20232B | Card borders (Dark)            |
-| `grey/600` |  #2F333B | Divider lines                  |
-| `grey/500` |  #495057 | Secondary icons, disabled text |
-| `grey/400` |  #6C757D | Placeholder text               |
-| `grey/300` |  #A1A7B3 | Dim text on Dark               |
-| `grey/100` |  #F5F8FA | Panel BG (Light)               |
-| `white`    |  #FFFFFF | Canvas (Light Mode)            |
+| Token      | Hex     | Usage            |
+| ---------- | ------- | ---------------- |
+| `grey/900` | #0A0C10 | Dark canvas      |
+| `grey/800` | #16181D | Elevated panels  |
+| `grey/700` | #20232B | Card borders     |
+| `grey/600` | #2F333B | Dividers         |
+| `grey/500` | #495057 | Disabled text    |
+| `grey/400` | #6C757D | Placeholder text |
+| `grey/300` | #A1A7B3 | Dim text (Dark)  |
+| `grey/100` | #F5F8FA | Panel BG (Light) |
+| `white`    | #FFFFFF | Canvas (Light)   |
 
-#### Functional Palette
+#### Functional Palette
 
-|  Semantic      |  Role          |  Light  |  Dark   |
-| -------------- | -------------- | ------- | ------- |
-| `accent/pass`  | Success, links | #19A7CE | #19A7CE |
-| `accent/fail`  | Error          | #FF6B6B | #FF6B6B |
-| `accent/warn`  | Warning        | #FFB454 | #FFB454 |
-| `accent/merit` | Equity Gold    | #F3C94C | #F3C94C |
-
-**AA / AAA Compliance:**  All text on background tokens meets WCAG AA; primary buttons AAA. Colour tokens stored in CSS variables & Tailwind config generated by `figma‑tokens` pipeline.
+| Semantic       | Dark    | Light   | WCAG Contrast |
+| -------------- | ------- | ------- | ------------- |
+| `accent/pass`  | #19A7CE | #19A7CE | 4.5:1 on bg   |
+| `accent/fail`  | #FF6B6B | #FF6B6B | 4.5:1         |
+| `accent/warn`  | #FFB454 | #FFB454 | 4.5:1         |
+| `accent/merit` | #F3C94C | #F3C94C | 4.5:1         |
 
 ### 2.2 Typography Scale
 
-|  Use Case   |  Font         |  Size (px) |  Line  |  Weight |
-| ----------- | ------------- | ---------- | ------ | ------- |
-| Display XL  | Inter         | 28         | 1.2    | 600     |
-| Display L   | Inter         | 22         | 1.25   | 600     |
-| Body M      | Inter         | 15         | 1.5    | 400     |
-| Body S      | Inter         | 13         | 1.5    | 400     |
-| Code / Mono | IBM Plex Mono | 13         | 1.45   | 400     |
-
-Letter‑spacing −0.25 px for headings, 0 px for body.
+| Style       | Font          | Size (px) | Line | Weight |
+| ----------- | ------------- | --------- | ---- | ------ |
+| Display XL  | Inter         | 28        | 1.2  | 600    |
+| Display L   | Inter         | 22        | 1.25 | 600    |
+| Heading M   | Inter         | 18        | 1.35 | 600    |
+| Body M      | Inter         | 15        | 1.5  | 400    |
+| Body S      | Inter         | 13        | 1.5  | 400    |
+| Code / Mono | IBM Plex Mono | 13        | 1.45 | 400    |
 
 ### 2.3 Spacing & Grid
 
-* **4 px baseline grid**.  Spacing tokens: `sp/0=0, sp/1=4, sp/2=8, sp/3=12, sp/4=16, sp/6=24, sp/8=32, sp/12=48, sp/16=64`.
-* **12‑column responsive grid** with 72 px gutters ≥ 1440 px; collapses to 8‑col at 1024 px, 4‑col at 768 px, single‑col mobile.
+4 px baseline; spacing tokens `sp/1=4` … `sp/16=64`. 12‑column grid (≥1440 px), 8‑col (1024 px), 4‑col (768 px), single‑col mobile.
 
-### 2.4 Iconography
+### 2.4 Iconography & Imagery
 
-* **Lucide** base + custom line icons (DNA helix, syringe, shield, rocket).  Stroke 1.5 px Dark, 1.25 px Light.  Icons follow 24 × 24 bounding‑box.
-
-### 2.5 Imagery & Illustration
-
-* **No stock photography.**  Abstract gradient “Aurora Ribbons” and vector fieldlines evoke computational biology.  Asset prefix `aurora/*` in CDN.
+Lucide 24 × 24 1.5 px stroke + custom helix, syringe, shield, rocket icons. No stock photos—use abstract “Aurora Ribbon” SVG backgrounds.
 
 ---
 
-## 3 · Motion & Micro‑Interactions
+## 3 · Motion & Micro‑Interactions (Framer Motion)
 
-### 3.1 Global Motion Rules
+| Element             | Trigger       | Motion                              | Purpose                       |
+| ------------------- | ------------- | ----------------------------------- | ----------------------------- |
+| Status Badge        | metric update | Flip Y 180°, spring `{140/24}`      | Feels like mission patch flip |
+| CI Log              | incoming line | slide `x:[‑8→0]`, fade `0→1` 180 ms | Telemetry feel                |
+| CureGraph Node Dive | click node    | Layout shared‑id morph              | Spatial context               |
+| Aurora Ribbon       | passive       | 90 s keyframe hue shift             | Living system                 |
+| Diversity Upgrade   | achieve medal | DNA confetti 80 ms burst            | Celebrate equity              |
 
-* **Physics** — Framer Motion spring `{stiffness:140, damping:24, mass:1}`.
-* **Durations** — Short 120 ms, Base 180 ms, Long 240 ms (keyframes only).
-* **Preference Respect** — `prefers-reduced-motion` disables all but essential transitions; `?audit=1` query param locks animations.
-
-### 3.2 Component Animations
-
-| Component       | Trigger        |  Animation                                   |  Purpose                                            |
-| --------------- | -------------- | -------------------------------------------- | --------------------------------------------------- |
-| Status Badge    | Metric change  | Flip Y 180°, counterincrement, colour fade ± | Signifies new evidence like NASA mission patch flip |
-| CI Log Line     | Stream ingress | Slide in `x:[‑8→0]`, opacity `[0→1]`         | Feels like telemetry feed                           |
-| CureGraph Dive  | Node click     | Framer Layout shared‑id morph                | Maintains spatial context                           |
-| Aurora Gradient | Passive        | 90 s keyframe hue shift                      | Subtle “living system” feeling                      |
+`prefers‑reduced‑motion` & `?audit=1` disable non‑essential motion.
 
 ---
 
 ## 4 · Information Architecture
 
 ```
-├─ Home (Hero + Aurora Ribbon + Cure‑Counter)
-│    └─ Story • Recent Milestones • CTA to Discover
-├─ Discover ↦ Search & facets (Trial | Twin | Dataset | Hypothesis)
-├─ Workspace ↦ My repos • PRs • CI Status • Graph of Life‑Days Saved
-├─ CureGraph ↦ Zoomable DAG (Dagre) • Evidence maturity colours
-├─ Ops Dashboard ↦ Map, dropout risk, reg queue status (Anduril style)
-├─ Marketplace ↦ Plug‑ins • Widgets • Stars • Trust score
-└─ Governance ↦ Org roles • Reg portals • Audit exports
+🏠 Home — Hero+Ribbon+Life‑Days Ticker
+├─ Discover   — Trials • Twins • Datasets • Hypotheses • Regulations
+├─ Workspace  — My Repos • PRs • CI • Contribution (Life‑Days) Graph
+├─ CureGraph  — Zoomable DAG, provenance, OpenFDA edges
+├─ Ops Dash   — Enrolment map, dropout risk, regulatory queue
+├─ Marketplace— Plug‑ins, Widgets, Stars, Trust
+├─ Ecosystem  — Connector status (OpenFDA, NIH, EMA, CT.gov, EHR)
+└─ Governance — Org roles, Audit exports, Reg portals
 ```
 
-Breadcrumb: `org / repo @ commit • signer‑hash‑8`. Copy on header click copies deep‑link.
+Breadcrumb format: `org / repo @ commit • signer‑hash‑8` (click to copy deep‑link).
 
 ---
 
 ## 5 · Component Library (`@bastion/ui`)
 
-| Component                                               | Props (excerpt)                  |
-| ------------------------------------------------------- | -------------------------------- |
-| `<Badge metric="power" value={0.83} state="pass" />`    | metric, value, state             |
-| `<ProtocolDiff old={str} new={str} view="clinician" />` | old, new, view                   |
-| `<EvidenceDrawer artifact={url} />`                     | link to HTML/nb artifact         |
-| `<CureGraph dag={json} />`                              | JSON DAG, layout options         |
-| `<TwinPlot data={parquet} x="Age" y="Tumour_Size" />`   | Dense scatter WebGL              |
-| `<DiversityRadar scores={obj} />`                       | Radar chart, accessible alt‑text |
-
-All components use Tailwind class tokens + Radix primitives; support theme context.
+| Component        | Description                       | Key Props                      |
+| ---------------- | --------------------------------- | ------------------------------ |
+| `Badge`          | Metric pill                       | `metric`, `value`, `state`     |
+| `ProtocolDiff`   | Side‑by‑side or inline YAML diff  | `old`, `new`, `mode`           |
+| `EvidenceDrawer` | Slide‑over with artefact previews | `artifactUrl`                  |
+| `CureGraph`      | Dagre graph                       | `dagJson`, `layout`            |
+| `TwinPlot`       | WebGL scatter/violin              | `dataUrl`, `x`, `y`            |
+| `DiversityRadar` | Radar chart                       | `scoresObj`                    |
+| `ConnectorCard`  | Shows external feed health        | `source`, `status`, `lastSync` |
+| `RegSignalBadge` | Inline regulatory alert           | `severity`, `message`          |
 
 ---
 
 ## 6 · Accessibility & Inclusivity
 
-* **WCAG AA** minimum for all surfaces; AAA for primary buttons.
-* **Dyslexia Mode** — Atkinson Hyperlegible, background tint `#F6F8FF`.
-* **Screen Reader** — YAML diffs parsed into ARIA live‑regions that announce semantic changes.
-* **Keyboard** — Tab loop order matches visual order; skip‑links for main content.
+* WCAG AA min; AAA for primary actions.
+* Dyslexia toggle (Atkinson Hyperlegible + tint).
+* Screen‑reader diff narration: “Removed upper age limit 65 → 75”.
+* Keyboard‑first nav; high‑contrast focus rings.
 
 ---
 
-## 7 · Performance & Technical
+## 7 · Performance & Technical Budgets
 
-| KPI                      | Target              | Budget Notes                       |
-| ------------------------ | ------------------- | ---------------------------------- |
-| First Contentful Paint   | ≤ 1 s on 4 G median | Edge caching, skeletons            |
-| Largest Contentful Paint | ≤ 2 s               | Lazy load heavy graphs             |
-| Interactive CI latency   | ≤ 200 ms P95        | SSE + Redis streams                |
-| Bundle size per route    | ≤ 150 kB (gz)       | `react-email`, lucide tree‑shaking |
-| Mobile memory            | ≤ 300 MB            | Offload graphs to web‑worker       |
-
-**Stack** — Next.js 15 + RSC, React 18, Framer Motion 10, Tailwind 3.x, Supabase (control‑plane), K8s + Argo (CI), Delta Lake (data‑plane).
+| KPI                      | Target        | Tooling                          |
+| ------------------------ | ------------- | -------------------------------- |
+| First Contentful Paint   | ≤ 1 s (4 G)   | Next.js 15 RSC, edge caching     |
+| Largest Contentful Paint | ≤ 2 s         | Image optimisation, lazy workers |
+| CI log latency           | ≤ 200 ms P95  | SSE, Redis streams               |
+| Bundle size per route    | ≤ 150 kB (gz) | Code‑split, tree‑shaking         |
+| Mobile memory            | ≤ 300 MB      | Offload graphs to web‑worker     |
+| Uptime                   | 99.9 %        | Supabase + K8s multi‑AZ          |
 
 ---
 
 ## 8 · Compliance Overlay
 
-* **Rust Part 11 Signer** — Signs merge commit JSON; weekly anchor to AWS QLDB.
-* **pg\_audit + WAL** → S3 Glacier (immutability policy).
-* **Privacy Kit** — PHI column detection, Safe‑Harbor masks; runs pre‑merge.
+Rust Part 11 signer → SHA‑256 + JWS → weekly anchor in AWS QLDB. pg\_audit + streamed WAL to S3 Glacier (immutability policy). Privacy Kit flags PHI → Safe‑Harbor masks pre‑merge.
 
 ---
 
-## 9 · Governance & Versioning
+## 9 · Federation & Ecosystem Connectors
 
-* **Design Council** (PM, Design, Clinician, Patient) meets monthly;
-* Design RFCs via `estelion/rfcs`; two‑week review for breaking changes.
-* λ‑Trial DSL under SemVer; migrations auto‑generated and tested in CI.
+| Source                 | ID                  | Cadence   | UI Surface               | Example Use               |
+| ---------------------- | ------------------- | --------- | ------------------------ | ------------------------- |
+| **OpenFDA**            | `connector/openfda` | 1 h       | RegSignalBadge, Ops Dash | Auto‑flag adverse events  |
+| **ClinicalTrials.gov** | `connector/ctgov`   | 24 h      | Discover facets          | Suggest reuse of modules  |
+| **NIH dbGaP / AnVIL**  | `connector/gap`     | Snapshot  | Twin Explorer            | Genotype cohorts          |
+| **EMA CTIS**           | `connector/ctis`    | 6 h       | CureGraph edges          | EU safety signals         |
+| **EHR FHIR Node**      | `connector/fhir`    | Streaming | Ops Dash                 | Live recruitment velocity |
 
----
-
-## 10 · Horizon – Inspirational Features
-
-| Phase | Innovation                                         | Why It Matters                                      |
-| ----- | -------------------------------------------------- | --------------------------------------------------- |
-|  2026 | **Copilot‑for‑Clinicians** (GPT‑4o agent)          | Suggests eligibility edits, speeds design.          |
-|  2027 | **Spatial Trials** (3‑D organ twins, radiotherapy) | Visual dose planning; patient‑specific predictions. |
-|  2028 | **zk‑Data‑Dividend**                               | Zero‑knowledge token payouts to participants.       |
-|  2029 | **VR Mission Control**                             | Global regulators review CureGraph together in VR.  |
+Connector Pill colours: green live, yellow degraded, red stale. Click → modal with latency sparkline & last payload checksum.
 
 ---
 
-## 11 · Voice & Tone Cheat Sheet
+## 10 · Governance & Versioning
 
-* **Voice:** Visionary yet evidence‑driven—“Skunkworks engineer meets clinical ethicist.”
-* **Tone:** Concise, data‑first, optimistic. Avoid medical jargon unless needed.
-* **Micro‑copy:** Actionable verbs (Fork, Simulate, Merge). Error messages state remediation steps.
+Design Council monthly (PM, Design, Clinician, Patient). RFCs in `estelion/rfcs`; two‑week review. λ‑Trial DSL SemVer; migration scripts auto‑tested in CI.
 
 ---
+
+## 11 · Horizon — Inspirational Features
+
+| ETA  | Feature                         | Impact                          |
+| ---- | ------------------------------- | ------------------------------- |
+| 2026 | Copilot‑for‑Clinicians (GPT‑4o) | Inline eligibility suggestions  |
+| 2027 | Spatial Trials 3‑D twins        | Precision radiotherapy planning |
+| 2028 | zk‑Data‑Dividend                | Proof‑of‑participation payouts  |
+| 2029 | VR Mission Control              | Global regulators in shared VR  |
+
+---
+
+## 12 · Voice & Tone
+
+**Voice:** Visionary yet evidence‑driven—“Skunkworks engineer meets clinical ethicist.”
+**Tone:** Concise, data‑first, optimistic; avoid jargon unless necessary.
+**Micro‑copy:** Verb‑first (“Fork”, “Simulate”, “Merge”); error messages include next‑step guidance.
+
+---
+
+### *“We design to collapse the distance between idea and cure—at planetary scale.”*
+
+Merge only what advances the CureGraph.
