@@ -2,7 +2,7 @@
 
 **Master Edition v3.2 — August 2025**
 
-> **Estecon’s Charge**   Two diseases cured; ten‑thousand remain.  Bastion is the **Command Center** where every idea, dataset, simulation, and protocol becomes computable, shareable, and merge‑able—so translation moves at software speed.
+> **Estelion’s Charge**   Two diseases cured; ten‑thousand remain.  Bastion is the **Command Center** where every idea, dataset, simulation, and protocol becomes computable, shareable, and merge‑able—so translation moves at software speed.
 > **Analogy:** GitHub gave code a home; Hugging Face gave models a commons; **Bastion unifies the entire translational stack**—from OpenFDA safety feeds to NIH genomic lakes—into one federated lattice we call **CureGraph**.
 
 ---
