@@ -1,0 +1,186 @@
+version: '3.8'
+
+services:
+  # Clinical Trial Repository Server
+  ctrepo-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.ctrepo
+    container_name: bastion-ctrepo
+    ports:
+      - "8080:8080"
+    volumes:
+      - ctrepo_data:/var/ctrepos
+      - ./schemas:/opt/bastion/schemas:ro
+    environment:
+      - FLASK_ENV=production
+      - REPO_ROOT=/var/ctrepos
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Evidence Engine (CI/CD Pipeline Server)
+  evidence-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile.evidence
+    container_name: bastion-evidence
+    ports:
+      - "8081:8080"
+    volumes:
+      - evidence_data:/var/evidence
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - ARGO_WORKFLOWS_ENDPOINT=http://argo-server:2746
+      - CTREPO_ENDPOINT=http://ctrepo-server:8080
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    depends_on:
+      - ctrepo-server
+
+  # PostgreSQL Database for metadata and audit trails
+  postgres:
+    image: postgres:15-alpine
+    container_name: bastion-postgres
+    environment:
+      POSTGRES_DB: bastion
+      POSTGRES_USER: bastion
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password_change_me}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Redis for caching and session management
+  redis:
+    image: redis:7-alpine
+    container_name: bastion-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # MinIO for object storage (Git LFS, artifacts)
+  minio:
+    image: minio/minio:RELEASE.2024-01-16T16-07-38Z
+    container_name: bastion-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-bastion}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-bastionpassword123}
+    volumes:
+      - minio_data:/data
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # Nginx reverse proxy and load balancer
+  nginx:
+    image: nginx:alpine
+    container_name: bastion-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    depends_on:
+      - ctrepo-server
+      - evidence-engine
+
+  # Argo Workflows for CI/CD orchestration
+  argo-server:
+    image: argoproj/argocli:v3.5.2
+    container_name: bastion-argo
+    ports:
+      - "2746:2746"
+    command: ["argo", "server", "--namespaced", "--auth-mode=server"]
+    environment:
+      - ARGO_NAMESPACE=default
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: bastion-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # Grafana for dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: bastion-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin123}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  ctrepo_data:
+    driver: local
+  evidence_data:
+    driver: local
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  bastion-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

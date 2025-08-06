@@ -1,0 +1,52 @@
+# Bastion Clinical Trial Repository Server
+FROM python:3.11-slim
+
+LABEL maintainer="Bastion Platform <engineering@bastion.health>"
+LABEL description="Git-compatible hosting for clinical trial protocols"
+LABEL version="1.0.0"
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create bastion user
+RUN useradd -m -s /bin/bash bastion
+
+# Set working directory
+WORKDIR /opt/bastion
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY bst/ ./bst/
+COPY schemas/ ./schemas/
+COPY hooks/ ./hooks/
+
+# Create repository storage directory
+RUN mkdir -p /var/ctrepos && chown -R bastion:bastion /var/ctrepos
+RUN mkdir -p /tmp/ctrepo_validation && chown -R bastion:bastion /tmp/ctrepo_validation
+
+# Copy Git hooks
+RUN mkdir -p /opt/bastion/hooks
+COPY hooks/validate_protocol.py ./hooks/
+
+# Set permissions
+RUN chown -R bastion:bastion /opt/bastion
+RUN chmod +x ./hooks/validate_protocol.py
+
+# Switch to bastion user
+USER bastion
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+
+# Start server
+CMD ["python", "bst/ctrepo_server.py"]
